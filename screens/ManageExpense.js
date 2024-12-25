@@ -2,11 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 const ManageExpense = () => {
-  return (
-    <View>
-      <Text>ManageExpense</Text>
-    </View>
-  );
+  return <Text>ManageExpense</Text>;
 };
 
 export default ManageExpense;
