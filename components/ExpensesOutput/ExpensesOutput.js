@@ -35,6 +35,36 @@ const DUMMY_EXPENSES = [
     amount: 200,
     date: new Date(2021, 5, 12),
   },
+  {
+    id: "e6",
+    description: "Groceries",
+    amount: 200,
+    date: new Date(2021, 5, 12),
+  },
+  {
+    id: "e7",
+    description: "Groceries",
+    amount: 200,
+    date: new Date(2021, 5, 12),
+  },
+  {
+    id: "e8",
+    description: "Groceries",
+    amount: 200,
+    date: new Date(2021, 5, 12),
+  },
+  {
+    id: "e9",
+    description: "Groceries",
+    amount: 200,
+    date: new Date(2021, 5, 12),
+  },
+  {
+    id: "e10",
+    description: "Groceries",
+    amount: 200,
+    date: new Date(2021, 5, 12),
+  },
 ];
 
 const ExpensesOutput = ({ expenses, expensesPeriod }) => {
@@ -51,7 +81,9 @@ export default ExpensesOutput;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    paddingHorizontal: 24,
+    paddingTop: 24,
+    paddingBottom: 0,
     backgroundColor: GlobalStyles.colors.primary700,
   },
 });
