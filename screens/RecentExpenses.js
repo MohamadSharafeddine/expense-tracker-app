@@ -10,7 +10,7 @@ const RecentExpenses = () => {
   const recentExpenses = expensesContext.expenses.filter((expense) => {
     const today = new Date();
     const days7DaysAgo = getDateMinusDays(today, 7);
-    return expense.date > days7DaysAgo;
+    return expense.date >= days7DaysAgo && expense.date <= today;
   });
 
   return (
