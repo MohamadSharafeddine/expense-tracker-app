@@ -9,6 +9,7 @@ import {
   deleteExpense,
   updateExpense,
 } from "../store/redux/expenses";
+import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 // import { ExpensesContext } from "../store/context/expenses-context";
 
 const ManageExpense = ({ route, navigation }) => {
@@ -63,6 +64,7 @@ const ManageExpense = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
+      <ExpenseForm />
       <View style={styles.buttons}>
         <Button style={styles.button} mode="flat" onPress={cancelHandler}>
           Cancel
