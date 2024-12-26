@@ -3,10 +3,19 @@ import React, { useContext, useLayoutEffect } from "react";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/styles";
 import Button from "../components/UI/Button";
-import { ExpensesContext } from "../store/context/expenses-context";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addExpense,
+  deleteExpense,
+  updateExpense,
+} from "../store/redux/expenses";
+// import { ExpensesContext } from "../store/context/expenses-context";
 
 const ManageExpense = ({ route, navigation }) => {
-  const expensesContext = useContext(ExpensesContext);
+  // const expensesContext = useContext(ExpensesContext);
+  const dispatch = useDispatch();
+  const expenses = useSelector((state) => state.expenses.expenses);
+
   const editedExpenseId = route.params?.expenseId;
   const isEditing = !!editedExpenseId;
 
@@ -17,28 +26,38 @@ const ManageExpense = ({ route, navigation }) => {
   }, [navigation, isEditing]);
 
   function deleteExpenseHandler() {
-    expensesContext.deleteExpense(editedExpenseId);
-    navigation.goBack();
-  }
-
-  function cancelHandler() {
+    // expensesContext.deleteExpense(editedExpenseId);
+    dispatch(deleteExpense(editedExpenseId));
     navigation.goBack();
   }
 
   function confirmHandler() {
     if (isEditing) {
-      expensesContext.updateExpense(editedExpenseId, {
-        description: "Test Updated",
-        amount: 9.99,
-        date: new Date("2024-12-01"),
-      });
+      // expensesContext.updateExpense(editedExpenseId, {
+      dispatch(
+        updateExpense({
+          id: editedExpenseId,
+          data: {
+            description: "Test Updated",
+            amount: 9.99,
+            date: new Date("2024-12-01"),
+          },
+        })
+      );
     } else {
-      expensesContext.addExpense({
-        description: "Test Added",
-        amount: 19.99,
-        date: new Date("2024-12-25"),
-      });
+      // expensesContext.addExpense({
+      dispatch(
+        addExpense({
+          description: "Test Added",
+          amount: 19.99,
+          date: new Date("2024-12-25"),
+        })
+      );
     }
+    navigation.goBack();
+  }
+
+  function cancelHandler() {
     navigation.goBack();
   }
 
