@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useContext } from "react";
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
-// import { ExpensesContext } from "../store/context/expenses-context";
+import { ExpensesContext } from "../store/context/expenses-context";
 import { getDateMinusDays } from "../util/date";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 const RecentExpenses = () => {
-  // const expensesContext = useContext(ExpensesContext);
-  const expenses = useSelector((state) => state.expenses.expenses);
+  const expensesContext = useContext(ExpensesContext);
+  // const expenses = useSelector((state) => state.expenses.expenses);
 
-  const recentExpenses = expenses.filter((expense) => {
+  const recentExpenses = expensesContext.expenses.filter((expense) => {
     const today = new Date();
     const days7DaysAgo = getDateMinusDays(today, 7);
     return expense.date >= days7DaysAgo && expense.date <= today;
