@@ -11,6 +11,7 @@ import Button from "../components/UI/Button";
 // } from "../store/redux/expenses";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import { ExpensesContext } from "../store/context/expenses-context";
+import { storeExpense } from "../util/http";
 
 const ManageExpense = ({ route, navigation }) => {
   const expensesContext = useContext(ExpensesContext);
@@ -40,6 +41,7 @@ const ManageExpense = ({ route, navigation }) => {
     if (isEditing) {
       expensesContext.updateExpense(editedExpenseId, expenseData);
     } else {
+      storeExpense(expenseData);
       expensesContext.addExpense(
         // dispatch(
         // addExpense({
