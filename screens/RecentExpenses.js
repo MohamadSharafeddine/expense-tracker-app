@@ -5,22 +5,33 @@ import { ExpensesContext } from "../store/context/expenses-context";
 import { getDateMinusDays } from "../util/date";
 import { fetchExpenses } from "../util/http";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
+import ErrorOverlay from "../components/UI/ErrorOverlay";
 // import { useSelector } from "react-redux";
 
 const RecentExpenses = () => {
   const [isFetching, setIsFetching] = useState(true);
+  const [error, setError] = useState();
   const expensesContext = useContext(ExpensesContext);
   // const expenses = useSelector((state) => state.expenses.expenses);
 
   useEffect(() => {
     async function getExpenses() {
       setIsFetching(true);
-      const expenses = await fetchExpenses();
+      try {
+        const expenses = await fetchExpenses();
+        expensesContext.setExpenses(expenses);
+      } catch (error) {
+        setError("Could not fetch expenses!");
+        console.log(error);
+      }
       setIsFetching(false);
-      expensesContext.setExpenses(expenses);
     }
     getExpenses();
   }, []);
+
+  if (error && !isFetching) {
+    return <ErrorOverlay message={error} />;
+  }
 
   if (isFetching) {
     return <LoadingOverlay />;
