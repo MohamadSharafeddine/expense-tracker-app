@@ -1,22 +1,30 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
 import { ExpensesContext } from "../store/context/expenses-context";
 import { getDateMinusDays } from "../util/date";
 import { fetchExpenses } from "../util/http";
+import LoadingOverlay from "../components/UI/LoadingOverlay";
 // import { useSelector } from "react-redux";
 
 const RecentExpenses = () => {
+  const [isFetching, setIsFetching] = useState(true);
   const expensesContext = useContext(ExpensesContext);
   // const expenses = useSelector((state) => state.expenses.expenses);
 
   useEffect(() => {
     async function getExpenses() {
+      setIsFetching(true);
       const expenses = await fetchExpenses();
+      setIsFetching(false);
       expensesContext.setExpenses(expenses);
     }
     getExpenses();
   }, []);
+
+  if (isFetching) {
+    return <LoadingOverlay />;
+  }
 
   const recentExpenses = expensesContext.expenses.filter((expense) => {
     const today = new Date();
