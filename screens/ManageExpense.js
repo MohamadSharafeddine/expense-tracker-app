@@ -37,15 +37,15 @@ const ManageExpense = ({ route, navigation }) => {
     navigation.goBack();
   }
 
-  function confirmHandler(expenseData) {
+  async function confirmHandler(expenseData) {
     if (isEditing) {
       expensesContext.updateExpense(editedExpenseId, expenseData);
     } else {
-      storeExpense(expenseData);
+      const id = await storeExpense(expenseData);
       expensesContext.addExpense(
         // dispatch(
         // addExpense({
-        expenseData
+        { ...expenseData, id: id }
       );
       // );
     }
