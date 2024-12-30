@@ -11,7 +11,7 @@ import Button from "../components/UI/Button";
 // } from "../store/redux/expenses";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import { ExpensesContext } from "../store/context/expenses-context";
-import { storeExpense } from "../util/http";
+import { deleteExpense, storeExpense, updateExpense } from "../util/http";
 
 const ManageExpense = ({ route, navigation }) => {
   const expensesContext = useContext(ExpensesContext);
@@ -31,7 +31,8 @@ const ManageExpense = ({ route, navigation }) => {
     });
   }, [navigation, isEditing]);
 
-  function deleteExpenseHandler() {
+  async function deleteExpenseHandler() {
+    await deleteExpense(editedExpenseId);
     expensesContext.deleteExpense(editedExpenseId);
     // dispatch(deleteExpense(editedExpenseId));
     navigation.goBack();
@@ -40,6 +41,7 @@ const ManageExpense = ({ route, navigation }) => {
   async function confirmHandler(expenseData) {
     if (isEditing) {
       expensesContext.updateExpense(editedExpenseId, expenseData);
+      await updateExpense(editedExpenseId, expenseData);
     } else {
       const id = await storeExpense(expenseData);
       expensesContext.addExpense(
